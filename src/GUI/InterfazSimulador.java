@@ -538,7 +538,7 @@ public class InterfazSimulador extends javax.swing.JFrame {
 
     private void CrearProcesoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_CrearProcesoActionPerformed
 
-        if (!"".equals(NombreProceso.getText()))
+        /*if (!"".equals(NombreProceso.getText()))
         {
             int AuxMaxCantRecursosPerProcess[] = new int [150];
             for (int i = 0; i < AuxMaxCantRecursosPerProcess.length ; i++) {
@@ -562,13 +562,13 @@ public class InterfazSimulador extends javax.swing.JFrame {
         }
         ContadorProcesosCreados++;
         NPCreadosDet.setText(Integer.toString(ContadorProcesosCreados));
-        NPCreadosP.setText(Integer.toString(ContadorProcesosCreados));
+        NPCreadosP.setText(Integer.toString(ContadorProcesosCreados));*/
 
     }//GEN-LAST:event_CrearProcesoActionPerformed
 
     private void AgregarAProcesoMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_AgregarAProcesoMouseClicked
 
-        idRecurso = ComboBoxTipoRecursos.getSelectedIndex();
+        /*idRecurso = ComboBoxTipoRecursos.getSelectedIndex();
         String TipoRecurso = ComboBoxTipoRecursos.getSelectedItem().toString();
 
         if (TipoRecurso!=null && !"".equals(CMaxProceso.getText()))
@@ -581,7 +581,7 @@ public class InterfazSimulador extends javax.swing.JFrame {
             System.out.println("ERROR al agregar recurso ");
         }
 
-        CMaxProceso.setText("");
+        CMaxProceso.setText("");*/
 
     }//GEN-LAST:event_AgregarAProcesoMouseClicked
 
@@ -595,7 +595,7 @@ public class InterfazSimulador extends javax.swing.JFrame {
 
     private void SolicitarMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_SolicitarMouseClicked
 
-        if (!"".equals(NombreRecurso2.getText())){
+        /*if (!"".equals(NombreRecurso2.getText())){
             if (VectorDeProceso[ListaProcesos.getSelectedIndex()].getMaxCantRecursosPOSICION(RecursoDelProceso.getSelectedIndex())!=0) {
                 int CantidadSolicitada = Integer.parseInt(NombreRecurso2.getText());
                 if ( CantidadSolicitada  <= VectorDeProceso[ListaProcesos.getSelectedIndex()].getMaxCantRecursosPOSICION(RecursoDelProceso.getSelectedIndex())) {
@@ -633,7 +633,7 @@ public class InterfazSimulador extends javax.swing.JFrame {
             jLabel20.setText(Integer.toString(Prediccion.getProcesosSistema()));
             NpSistemaDet.setText(Integer.toString(Deteccion.getProcesosSistema()));
 
-        }
+        }*/
     }//GEN-LAST:event_SolicitarMouseClicked
 
     private void SolicitarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_SolicitarActionPerformed
@@ -673,7 +673,6 @@ public class InterfazSimulador extends javax.swing.JFrame {
         } catch (javax.swing.UnsupportedLookAndFeelException ex) {
             java.util.logging.Logger.getLogger(InterfazSimulador.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
-        //</editor-fold>
         //</editor-fold>
 
         /* Create and display the form */

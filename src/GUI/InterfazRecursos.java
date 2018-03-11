@@ -14,8 +14,7 @@ public class InterfazRecursos extends javax.swing.JFrame {
     /**
      * Creates new form InterfazRecursos
      */
-    public InterfazRecursos() 
-    {
+    public InterfazRecursos() {
         initComponents();
         this.setLocationRelativeTo(null);
     }
@@ -116,14 +115,14 @@ public class InterfazRecursos extends javax.swing.JFrame {
         // TODO add your handling code here:
         if(!"".equals(NombreRecurso.getText()) && !"".equals(CantidadRecurso.getText()))
         {
-            Recurso r = new Recurso ();
+            /*Recurso r = new Recurso ();
             r.setNombre(NombreRecurso.getText());
             r.setCantRecurso(Integer.parseInt(CantidadRecurso.getText()));
             ListaNuevosRecursos.addItem(NombreRecurso.getText());
             VectorDeRecursos [idRecurso] = r;
             idRecurso++;
             NombreRecurso.setText("");
-            CantidadRecurso.setText("");
+            CantidadRecurso.setText("");*/
 
         }
 
@@ -131,8 +130,8 @@ public class InterfazRecursos extends javax.swing.JFrame {
 
     private void IniciarMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_IniciarMouseClicked
         // TODO add your handling code here:
-        InterfazPrincipal main = new InterfazPrincipal(VectorDeProcesos,VectorDeRecursos);
-        main.setVisible(true);
+        //InterfazPrincipal main = new InterfazPrincipal(VectorDeProcesos,VectorDeRecursos);
+        //main.setVisible(true);
         this.setVisible(false);
     }//GEN-LAST:event_IniciarMouseClicked
 
@@ -169,7 +168,6 @@ public class InterfazRecursos extends javax.swing.JFrame {
         } catch (javax.swing.UnsupportedLookAndFeelException ex) {
             java.util.logging.Logger.getLogger(InterfazRecursos.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
-        //</editor-fold>
         //</editor-fold>
 
         /* Create and display the form */

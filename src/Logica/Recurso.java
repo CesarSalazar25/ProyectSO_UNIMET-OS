@@ -6,13 +6,6 @@ public class Recurso
     private String nombre;  //Nombre del recurso a crear.
     private int cantidad;   //Cantidad del recurso creado.
     
-    //Constructor:
-    public Recurso(String nombre, int cantidad) 
-    {
-        this.nombre = nombre;
-        this.cantidad = cantidad;
-    }
-    
     //Getters y Setters:
     public String getNombre() 
     {

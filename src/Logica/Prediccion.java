@@ -5,14 +5,14 @@ import javax.swing.JTextArea;
 public class Prediccion 
 {
     //Variables:
-    private int Asignacion[][]= new int [1][1];             //Matriz de recursos asi4gnados para cada proceso.
-    private int Necesidad[][]= new int [1][1];              //Matriz de requerimientos actual para cada proceso.
-    private int Bloqueados[][]= new int [1][1];             //Matriz de procesos bloqueados.
-    private int Maximos[][]= new int [1][1];                //Matriz de procesos con sus recursos máximos.
-    private int Recursos[]= new int [1];                    //Vector de cantidad total de recursos en el sistema.
-    private int Disponibles[]= new int [1];                 //Vector de recursos disponibles para cada proceso.
-    private int Auxiliar[]= new int [1];                 
-    private int Procesos_finalizados[]= new int [1];      
+    private int Asignacion[][]= new int [150][150];             //Matriz de recursos asi4gnados para cada proceso.
+    private int Necesidad[][]= new int [150][150];              //Matriz de requerimientos actual para cada proceso.
+    private int Bloqueados[][]= new int [150][150];             //Matriz de procesos bloqueados.
+    private int Maximos[][]= new int [150][150];                //Matriz de procesos con sus recursos máximos.
+    private int Recursos[]= new int [150];                    //Vector de cantidad total de recursos en el sistema.
+    private int Disponibles[]= new int [150];                 //Vector de recursos disponibles para cada proceso.
+    private int Auxiliar[]= new int [150];                 
+    private int Procesos_finalizados[]= new int [150];      
     private int cant_procesos;              
     private int cant_recursos;
     private long tiempo=0;
@@ -28,45 +28,45 @@ public class Prediccion
     public Prediccion(Recurso [] rec, JTextArea Consola_P) 
     {
         this.cant_recursos = rec.length;
-        this.cant_procesos= 10;
+        this.cant_procesos= 150;
         this.Consola_P = Consola_P;
         
         //Se inicializan las matrices y vectores en cero:
-        for (int i = 0; i < 10; i++) 
+        for (int i = 0; i < 150; i++) 
         {
-            for (int j = 0; j < 10; j++) 
+            for (int j = 0; j < 150; j++) 
             {
                 Asignacion[i][j]=0;
             }
         }
         
-        for (int i = 0; i < 10; i++) 
+        for (int i = 0; i < 150; i++) 
         {
-            for (int j = 0; j < 10; j++) 
+            for (int j = 0; j < 150; j++) 
             {
                 Maximos[i][j]=0;
             }
         }
         
-        for (int i = 0; i < 10; i++) 
+        for (int i = 0; i < 150; i++) 
         {
-            for (int j = 0; j < 10; j++) 
+            for (int j = 0; j < 150; j++) 
             {
                 Bloqueados[i][j]=0;
             }
         }
         
-        for (int i = 0; i < 10; i++) 
+        for (int i = 0; i < 150; i++) 
         {   
             Procesos_finalizados[i]=0;    
         }
         
-        for (int i = 0; i < 10; i++) 
+        for (int i = 0; i < 150; i++) 
         {
             Recursos[i]=0;
         }
         
-        for (int i = 0; i < 10; i++) 
+        for (int i = 0; i < 150; i++) 
         {
             if (rec[i]!=null) 
             {
@@ -85,7 +85,7 @@ public class Prediccion
     }
     
     //Metodo que Inserta cada proceso en las matrices Maximos y Asig5nados 
-    public void Insertar_Proceso (int [] maxRecursosPerProceso, int id_Proceso ) 
+    public void Insertar_Procesos (int [] maxRecursosPerProceso, int id_Proceso ) 
     {
     
         for (int j = 0; j < Recursos.length; j++) 

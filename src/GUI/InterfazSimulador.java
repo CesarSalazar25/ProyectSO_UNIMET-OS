@@ -1,22 +1,80 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package GUI;
 
-/**
- *
- * @author Usuario
- */
+import Logica.Proceso;
+import Logica.Recurso;
+import Logica.Prediccion;
+import Logica.Deteccion;
+import java.awt.Color;
+import javax.swing.DefaultListModel;
+import javax.swing.JOptionPane;
+
+
 public class InterfazSimulador extends javax.swing.JFrame {
 
-    /**
-     * Creates new form InterfazSimulador
-     */
-    public InterfazSimulador() {
+    //Variables:
+    DefaultListModel modelo;
+    private int id_proceso=0;
+    private int MaxCantRecursos [] = new int[150];
+    private Proceso Vector_Proceso [];
+    private Recurso Vector_Recurso [];
+    private int id_recurso;
+    private int Cont_ProcesosCreados = 0;
+    private int Solicitudes = 0;
+    public Prediccion Prediccion;
+    public Deteccion Deteccion;
+    
+    //Constructor:
+    public InterfazSimulador(Proceso[] Vector_Proceso, Recurso[] Vector_Recurso ) 
+    {
         initComponents();
-        this.setLocationRelativeTo(null);
+        this.getContentPane().setBackground(Color.lightGray);
+        setLocationRelativeTo(null);
+        setResizable(false);
+        this.Vector_Proceso = Vector_Proceso;
+        this.Vector_Recurso = Vector_Recurso;
+        this.Prediccion = new Prediccion (Vector_Recurso,ConsolePrediccion);
+        this.Deteccion = new Deteccion (Vector_Recurso, ConsoleDeteccion);
+        modelo = new DefaultListModel();
+        ListaRecursosAsignados.setModel(modelo);
+        llenarComboBoxRecursos();
+        llenarComboBoxRecursoDelProceso ();
+        inicializarMaxCantRecursosPerProcess();
+    }
+    
+    //Constructor:
+    private InterfazSimulador() 
+    {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+    
+    private void inicializarMaxCantRecursosPerProcess () 
+    {
+        for (int i = 0; i < MaxCantRecursos.length ; i++) 
+        {
+            MaxCantRecursos[i]=0;
+        } 
+    }
+    
+    private void llenarComboBoxRecursoDelProceso()
+    {
+        for (int i = 0; i < Vector_Recurso.length; i++) 
+        {
+            if (Vector_Recurso[i]!= null) 
+            {
+                RecursoDelProceso.addItem(Vector_Recurso[i].getNombre());
+            }     
+        }
+    }
+    
+    private void llenarComboBoxRecursos()
+    {
+        for (int i = 0; i < Vector_Recurso.length; i++) 
+        {
+            if (Vector_Recurso[i]!= null) 
+            {
+                ComboBoxTipoRecursos.addItem(Vector_Recurso[i].getNombre());
+            }  
+        }
     }
 
     /**
@@ -66,7 +124,7 @@ public class InterfazSimulador extends javax.swing.JFrame {
         DtotalElim = new javax.swing.JLabel();
         Dtiempo = new javax.swing.JLabel();
         jScrollPane3 = new javax.swing.JScrollPane();
-        ConsolePrediccion1 = new javax.swing.JTextArea();
+        ConsoleDeteccion = new javax.swing.JTextArea();
         jPanel3 = new javax.swing.JPanel();
         jLabel10 = new javax.swing.JLabel();
         jLabel11 = new javax.swing.JLabel();
@@ -322,9 +380,10 @@ public class InterfazSimulador extends javax.swing.JFrame {
 
         Dtiempo.setText("0");
 
-        ConsolePrediccion1.setColumns(20);
-        ConsolePrediccion1.setRows(5);
-        jScrollPane3.setViewportView(ConsolePrediccion1);
+        ConsoleDeteccion.setEditable(false);
+        ConsoleDeteccion.setColumns(20);
+        ConsoleDeteccion.setRows(5);
+        jScrollPane3.setViewportView(ConsoleDeteccion);
 
         javax.swing.GroupLayout jPanel4Layout = new javax.swing.GroupLayout(jPanel4);
         jPanel4.setLayout(jPanel4Layout);
@@ -415,7 +474,7 @@ public class InterfazSimulador extends javax.swing.JFrame {
 
         jLabel15.setText("Número de Procesos Bloqueados");
 
-        jLabel16.setText("Total de Procesos Eliminados");
+        jLabel16.setText("Total de Procesos Finalizados");
 
         jLabel18.setText("Tiempo");
 
@@ -433,6 +492,7 @@ public class InterfazSimulador extends javax.swing.JFrame {
 
         Ptiempo.setText("0");
 
+        ConsolePrediccion.setEditable(false);
         ConsolePrediccion.setColumns(20);
         ConsolePrediccion.setRows(5);
         jScrollPane2.setViewportView(ConsolePrediccion);
@@ -538,50 +598,56 @@ public class InterfazSimulador extends javax.swing.JFrame {
 
     private void CrearProcesoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_CrearProcesoActionPerformed
 
-        /*if (!"".equals(NombreProceso.getText()))
+        if (!"".equals(NombreProceso.getText()))
         {
             int AuxMaxCantRecursosPerProcess[] = new int [150];
-            for (int i = 0; i < AuxMaxCantRecursosPerProcess.length ; i++) {
-                AuxMaxCantRecursosPerProcess[i]=MaxCantRecursosPerProcess[i];
+            
+            for (int i = 0; i < AuxMaxCantRecursosPerProcess.length ; i++) 
+            {
+                AuxMaxCantRecursosPerProcess[i]=MaxCantRecursos[i];
             }
 
-            Proceso p = new Proceso (IDProceso, NombreProceso.getText(), AuxMaxCantRecursosPerProcess);
-            VectorDeProceso [IDProceso] = p;
+            Proceso p = new Proceso (NombreProceso.getText(), id_proceso, AuxMaxCantRecursosPerProcess);
+            Vector_Proceso [id_proceso] = p;
 
-            Prediccion.insertarProceso(VectorDeProceso[IDProceso].getMaxCantRecursos(),VectorDeProceso[IDProceso].getId() );
-            Deteccion.insertarProceso(VectorDeProceso[IDProceso].getMaxCantRecursos(),VectorDeProceso[IDProceso].getId());
+            Prediccion.Insertar_Procesos(Vector_Proceso[id_proceso].getCant_max(),Vector_Proceso[id_proceso].getId_proceso() );
+            Deteccion.Insertar_Procesos(Vector_Proceso[id_proceso].getCant_max(),Vector_Proceso[id_proceso].getId_proceso());
 
-            IDProceso++;
-            ListaProcesos.addItem(p.getNombre());
+            id_proceso++;
+            ListaProcesos.addItem(p.getNombre_proceso());
             modelo.removeAllElements();
             NombreProceso.setText("");
         }
-        else { JOptionPane.showMessageDialog(null, "ERROR: por favor Describa el nombre del proceso!");  }
-        for (int i = 0; i < MaxCantRecursosPerProcess.length ; i++) {
-            MaxCantRecursosPerProcess[i]=0;
+        else 
+        { 
+            JOptionPane.showMessageDialog(null, "ERROR: por favor Describa el nombre del proceso!");
         }
-        ContadorProcesosCreados++;
-        NPCreadosDet.setText(Integer.toString(ContadorProcesosCreados));
-        NPCreadosP.setText(Integer.toString(ContadorProcesosCreados));*/
+        for (int i = 0; i < MaxCantRecursos.length ; i++) 
+        {
+            MaxCantRecursos[i]=0;
+        }
+        Cont_ProcesosCreados++;
+        PprocesosCreados.setText(Integer.toString(Cont_ProcesosCreados));
+        DprocesosCreados.setText(Integer.toString(Cont_ProcesosCreados));
 
     }//GEN-LAST:event_CrearProcesoActionPerformed
 
     private void AgregarAProcesoMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_AgregarAProcesoMouseClicked
 
-        /*idRecurso = ComboBoxTipoRecursos.getSelectedIndex();
-        String TipoRecurso = ComboBoxTipoRecursos.getSelectedItem().toString();
+        id_recurso = ComboBoxTipoRecursos.getSelectedIndex();
+        String Tipo_Recurso = ComboBoxTipoRecursos.getSelectedItem().toString();
 
-        if (TipoRecurso!=null && !"".equals(CMaxProceso.getText()))
+        if (Tipo_Recurso!=null && !"".equals(CMaxProceso.getText()))
         {
-            modelo.addElement(" Recurso: "+TipoRecurso+"        "+"  Cantidad: "+CMaxProceso.getText());
-            MaxCantRecursosPerProcess[idRecurso]=Integer.parseInt(CMaxProceso.getText());
+            modelo.addElement(" Recurso: "+Tipo_Recurso+"        "+"  Cantidad: "+CMaxProceso.getText());
+            MaxCantRecursos[id_recurso]=Integer.parseInt(CMaxProceso.getText());
         }
         else
         {
             System.out.println("ERROR al agregar recurso ");
         }
 
-        CMaxProceso.setText("");*/
+        CMaxProceso.setText("");
 
     }//GEN-LAST:event_AgregarAProcesoMouseClicked
 
@@ -595,45 +661,54 @@ public class InterfazSimulador extends javax.swing.JFrame {
 
     private void SolicitarMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_SolicitarMouseClicked
 
-        /*if (!"".equals(NombreRecurso2.getText())){
-            if (VectorDeProceso[ListaProcesos.getSelectedIndex()].getMaxCantRecursosPOSICION(RecursoDelProceso.getSelectedIndex())!=0) {
-                int CantidadSolicitada = Integer.parseInt(NombreRecurso2.getText());
-                if ( CantidadSolicitada  <= VectorDeProceso[ListaProcesos.getSelectedIndex()].getMaxCantRecursosPOSICION(RecursoDelProceso.getSelectedIndex())) {
-                    int AuxSolicitud [] = new int [150];
-                    for (int i = 0; i < AuxSolicitud.length ; i++) {
-                        AuxSolicitud [i] = 0;
-                    }
+    if (!"".equals(NombreRecurso2.getText()))
+    {
+        if (Vector_Proceso[ListaProcesos.getSelectedIndex()].getCant_maxPOSICION(RecursoDelProceso.getSelectedIndex())!=0) 
+        {
+            int CantidadSolicitada = Integer.parseInt(NombreRecurso2.getText());
+            
+            if ( CantidadSolicitada  <= Vector_Proceso[ListaProcesos.getSelectedIndex()].getCant_maxPOSICION(RecursoDelProceso.getSelectedIndex())) 
+            {
+                int AuxSolicitud [] = new int [150];
+                
+                for (int i = 0; i < AuxSolicitud.length ; i++) 
+                {
+                    AuxSolicitud [i] = 0;
+                }
                     AuxSolicitud [RecursoDelProceso.getSelectedIndex()] = CantidadSolicitada;
-                    Prediccion.ejecutar(VectorDeProceso[ListaProcesos.getSelectedIndex()].getId(), AuxSolicitud);
-                    Deteccion.ejecutar(VectorDeProceso[ListaProcesos.getSelectedIndex()].getId(), AuxSolicitud);
+                    Prediccion.Ejecutar(Vector_Proceso[ListaProcesos.getSelectedIndex()].getId_proceso(), AuxSolicitud);
+                    Deteccion.Ejecutar(Vector_Proceso[ListaProcesos.getSelectedIndex()].getId_proceso(), AuxSolicitud);
                 }
-                else {
-                    JOptionPane.showMessageDialog(null, "ERROR: El recurso solicitado del proceso sobrepasa el max especificado! ");
-                }
+            else 
+            {
+                JOptionPane.showMessageDialog(null, "ERROR: El recurso solicitado del proceso sobrepasa el max especificado! ");
+            }
+            
             }
             else
             {
-                JOptionPane.showMessageDialog(null, "ERROR: Este recurso no es usado por el proceso: "+VectorDeProceso[ListaProcesos.getSelectedIndex()].getNombre());
+                JOptionPane.showMessageDialog(null, "ERROR: Este recurso no es usado por el proceso: "+Vector_Proceso[ListaProcesos.getSelectedIndex()].getNombre_proceso());
             }
 
             Solicitudes++;
-            nSD.setText(Integer.toString(Solicitudes));
-            jLabel21.setText(Integer.toString(Solicitudes));
-            jLabel22.setText(Integer.toString(Prediccion.getProcesosBloqueados()));
-            jLabel23.setText(Integer.toString(Prediccion.getProcesosBloqueadosT()));
-            jLabel24.setText(Integer.toString(Prediccion.getProcesosFinalizados()));
-            jLabel25.setText(Long.toString(Prediccion.getTiempo()));
+            Dsolicitudes.setText(Integer.toString(Solicitudes));
+            Psolicitudes.setText(Integer.toString(Solicitudes));
+            PprocesosBloq.setText(Integer.toString(Prediccion.getPro_bloqueados()));
+            PtotalBloq.setText(Integer.toString(Prediccion.getPro_bloq_Total()));
+            PtotalElim.setText(Integer.toString(Prediccion.getPro_finalizados()));
+            Ptiempo.setText(Long.toString(Prediccion.getTiempo()));
 
-            TiempoDeteccion.setText(Long.toString(Deteccion.getTiempo()));
-            nBloqDet.setText(Integer.toString(Deteccion.getBloqActual()));
-            totBloqDet.setText(Integer.toString(Deteccion.getProcesosBloqueadosT()));
-            TotEliminados.setText(Integer.toString(Deteccion.getProcesosEliminados()));
+            Dtiempo.setText(Long.toString(Deteccion.getTiempo()));
+            DprocesosBloq.setText(Integer.toString(Deteccion.getBloqueo_actual()));
+            DtotalBloq.setText(Integer.toString(Deteccion.getPro_bloq_Total()));
+            DtotalElim.setText(Integer.toString(Deteccion.getPro_eliminados()));
             NombreRecurso2.setText("");
 
-            jLabel20.setText(Integer.toString(Prediccion.getProcesosSistema()));
-            NpSistemaDet.setText(Integer.toString(Deteccion.getProcesosSistema()));
+            PprocesosSistema.setText(Integer.toString(Prediccion.getProcesos_sistema()));
+            DprocesosSistema.setText(Integer.toString(Deteccion.getProcesos_sistema()));
 
-        }*/
+    }
+    
     }//GEN-LAST:event_SolicitarMouseClicked
 
     private void SolicitarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_SolicitarActionPerformed
@@ -651,12 +726,14 @@ public class InterfazSimulador extends javax.swing.JFrame {
     /**
      * @param args the command line arguments
      */
-    public static void main(String args[]) {
+    public static void main(String args[]) 
+    {
         /* Set the Nimbus look and feel */
         //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
         /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
          * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html 
          */
+    //Quitar los comentarios
         try {
             for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
                 if ("Nimbus".equals(info.getName())) {
@@ -673,6 +750,7 @@ public class InterfazSimulador extends javax.swing.JFrame {
         } catch (javax.swing.UnsupportedLookAndFeelException ex) {
             java.util.logging.Logger.getLogger(InterfazSimulador.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
+    //Quitar los comentarios
         //</editor-fold>
 
         /* Create and display the form */
@@ -687,8 +765,8 @@ public class InterfazSimulador extends javax.swing.JFrame {
     private javax.swing.JButton AgregarAProceso;
     private javax.swing.JTextField CMaxProceso;
     private javax.swing.JComboBox ComboBoxTipoRecursos;
+    private javax.swing.JTextArea ConsoleDeteccion;
     private javax.swing.JTextArea ConsolePrediccion;
-    private javax.swing.JTextArea ConsolePrediccion1;
     private javax.swing.JButton CrearProceso;
     private javax.swing.JLabel DprocesosBloq;
     private javax.swing.JLabel DprocesosCreados;

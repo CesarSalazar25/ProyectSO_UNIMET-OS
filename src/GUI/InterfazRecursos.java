@@ -5,18 +5,32 @@
  */
 package GUI;
 
-/**
- *
- * @author Usuario
- */
-public class InterfazRecursos extends javax.swing.JFrame {
+import Logica.Proceso;
+import Logica.Recurso;
 
-    /**
-     * Creates new form InterfazRecursos
-     */
-    public InterfazRecursos() {
+/*
+ * @author César Salazar y Loredana de Miro
+ */
+public class InterfazRecursos extends javax.swing.JFrame 
+{
+
+    private Proceso Vector_Procesos[]; 
+    private Recurso Vector_Recursos[];
+    private int id_recurso = 0;
+    
+
+    public InterfazRecursos(Recurso[] vecRecursos, Proceso[] vecProcesos) 
+    {
         initComponents();
-        this.setLocationRelativeTo(null);
+        setLocationRelativeTo(null);
+        setResizable(false);
+        ListaNuevosRecursos.removeAllItems();
+        this.Vector_Procesos = vecProcesos;
+        this.Vector_Recursos = vecRecursos;
+    }
+
+    private InterfazRecursos() {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
     /**
@@ -53,7 +67,7 @@ public class InterfazRecursos extends javax.swing.JFrame {
         jLabel3.setForeground(new java.awt.Color(255, 255, 255));
         jLabel3.setText("Nombre");
         getContentPane().add(jLabel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 130, -1, -1));
-        getContentPane().add(NombreRecurso, new org.netbeans.lib.awtextra.AbsoluteConstraints(110, 180, 170, -1));
+        getContentPane().add(NombreRecurso, new org.netbeans.lib.awtextra.AbsoluteConstraints(110, 130, 170, -1));
 
         AgregarRecurso.setBackground(new java.awt.Color(0, 51, 204));
         AgregarRecurso.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
@@ -69,14 +83,14 @@ public class InterfazRecursos extends javax.swing.JFrame {
         jLabel4.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
         jLabel4.setForeground(new java.awt.Color(255, 255, 255));
         jLabel4.setText("Cantidad");
-        getContentPane().add(jLabel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 180, -1, -1));
+        getContentPane().add(jLabel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 170, -1, -1));
 
         CantidadRecurso.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 CantidadRecursoActionPerformed(evt);
             }
         });
-        getContentPane().add(CantidadRecurso, new org.netbeans.lib.awtextra.AbsoluteConstraints(110, 130, 170, -1));
+        getContentPane().add(CantidadRecurso, new org.netbeans.lib.awtextra.AbsoluteConstraints(110, 170, 170, -1));
 
         Iniciar.setBackground(new java.awt.Color(0, 51, 204));
         Iniciar.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
@@ -87,7 +101,12 @@ public class InterfazRecursos extends javax.swing.JFrame {
                 IniciarMouseClicked(evt);
             }
         });
-        getContentPane().add(Iniciar, new org.netbeans.lib.awtextra.AbsoluteConstraints(300, 180, 80, -1));
+        Iniciar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                IniciarActionPerformed(evt);
+            }
+        });
+        getContentPane().add(Iniciar, new org.netbeans.lib.awtextra.AbsoluteConstraints(300, 170, 80, -1));
 
         jLabel5.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
         jLabel5.setForeground(new java.awt.Color(255, 255, 255));
@@ -115,23 +134,22 @@ public class InterfazRecursos extends javax.swing.JFrame {
         // TODO add your handling code here:
         if(!"".equals(NombreRecurso.getText()) && !"".equals(CantidadRecurso.getText()))
         {
-            /*Recurso r = new Recurso ();
-            r.setNombre(NombreRecurso.getText());
-            r.setCantRecurso(Integer.parseInt(CantidadRecurso.getText()));
+            Recurso recurso = new Recurso ();
+            recurso.setNombre(NombreRecurso.getText());
+            recurso.setCantidad(Integer.parseInt(CantidadRecurso.getText()));
             ListaNuevosRecursos.addItem(NombreRecurso.getText());
-            VectorDeRecursos [idRecurso] = r;
-            idRecurso++;
+            Vector_Recursos [id_recurso] = recurso;
+            id_recurso++;
             NombreRecurso.setText("");
-            CantidadRecurso.setText("");*/
-
+            CantidadRecurso.setText("");
         }
 
     }//GEN-LAST:event_AgregarRecursoMouseClicked
 
     private void IniciarMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_IniciarMouseClicked
         // TODO add your handling code here:
-        //InterfazPrincipal main = new InterfazPrincipal(VectorDeProcesos,VectorDeRecursos);
-        //main.setVisible(true);
+        InterfazSimulador main = new InterfazSimulador(Vector_Procesos,Vector_Recursos);
+        main.setVisible(true);
         this.setVisible(false);
     }//GEN-LAST:event_IniciarMouseClicked
 
@@ -143,10 +161,15 @@ public class InterfazRecursos extends javax.swing.JFrame {
         System.exit(0);
     }//GEN-LAST:event_exitActionPerformed
 
+    private void IniciarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_IniciarActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_IniciarActionPerformed
+
     /**
      * @param args the command line arguments
      */
-    public static void main(String args[]) {
+    public static void main(String args[]) 
+    {
         /* Set the Nimbus look and feel */
         //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
         /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
@@ -171,11 +194,14 @@ public class InterfazRecursos extends javax.swing.JFrame {
         //</editor-fold>
 
         /* Create and display the form */
-        java.awt.EventQueue.invokeLater(new Runnable() {
-            public void run() {
+        java.awt.EventQueue.invokeLater(new Runnable() 
+        {
+            public void run() 
+            {
                 new InterfazRecursos().setVisible(true);
             }
-        });
+        }
+        );
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

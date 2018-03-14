@@ -18,8 +18,8 @@ public class Inicio
         ex.printStackTrace(); 
         }   
         
-        Recurso vecRecursos [] = new Recurso [10];
-        Proceso vecProcesos [] = new Proceso [10];
+        Recurso vecRecursos [] = new Recurso [150];
+        Proceso vecProcesos [] = new Proceso [150];
         
         InterfazRecursos ini = new InterfazRecursos(vecRecursos, vecProcesos);
         ini.setVisible(true);

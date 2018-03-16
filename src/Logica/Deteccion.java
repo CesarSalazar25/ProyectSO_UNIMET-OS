@@ -5,16 +5,16 @@ import javax.swing.JTextArea;   //Para mostrar todos los detalles relativos a la
 public class Deteccion 
 {
     //Variables:
-    private int Asignacion[][]= new int [150][150];              //Matriz de recursos asignados para cada proceso.
-    private int Necesidad[][]= new int [150][150];               //Matriz de requerimientos actual para cada proceso.
-    private int Bloqueados[][]= new int [150][150];              //Matriz de procesos bloqueados.
-    private int Maximos[][]= new int [150][150];                 //Matriz de procesos con sus recursos máximos.
-    private int Recursos[]= new int [150];                       //Vector de cantidad total de recursos en el sistema.
-    private int Disponibles[]= new int [150];                    //Vector de recursos disponibles para cada proceso.
-    private int Temporal[]= new int [150];                       //Vector temporal que recibe los recursos disponibles para comparar.
-    private int Procesos_finalizados[]= new int [150];           //Vector que almacena los procesos finalizados.
-    private int Procesos_eliminados[]= new int [150];            //Vector que almacena los procesos eliminados.
-    private boolean Procesos_marcados[]= new boolean [150];      //Vector de procesos marcados (proceso sin marcar, esta en un interbloqueo).
+    private int Asignacion[][]= new int [10][10];              //Matriz de recursos asignados para cada proceso.
+    private int Necesidad[][]= new int [10][10];               //Matriz de requerimientos actual para cada proceso.
+    private int Bloqueados[][]= new int [10][10];              //Matriz de procesos bloqueados.
+    private int Maximos[][]= new int [10][10];                 //Matriz de procesos con sus recursos máximos.
+    private int Recursos[]= new int [10];                       //Vector de cantidad total de recursos en el sistema.
+    private int Disponibles[]= new int [10];                    //Vector de recursos disponibles para cada proceso.
+    private int Temporal[]= new int [10];                       //Vector temporal que recibe los recursos disponibles para comparar.
+    private int Procesos_finalizados[]= new int [10];           //Vector que almacena los procesos finalizados.
+    private int Procesos_eliminados[]= new int [10];            //Vector que almacena los procesos eliminados.
+    private boolean Procesos_marcados[]= new boolean [10];      //Vector de procesos marcados (proceso sin marcar, esta en un interbloqueo).
     private int cant_procesos;              
     private int cant_recursos;
     private int p_finalizados=0;
@@ -37,60 +37,60 @@ public class Deteccion
         this.Consola_D=Consola_D;
         
         //Se inicializan las matrices y vectores en cero: 
-        for (int i = 0; i < 150; i++)
+        for (int i = 0; i < 10; i++)
         {
-            for (int j = 0; j < 150; j++) 
+            for (int j = 0; j < 10; j++) 
             {
                 Asignacion[i][j]=0;
             }
         }
                 
-        for (int i = 0; i < 150; i++) 
+        for (int i = 0; i < 10; i++) 
         {
-            for (int j = 0; j < 150; j++) 
+            for (int j = 0; j < 10; j++) 
             {
                 Necesidad[i][j]=0;
             }
         }
         
-        for (int i = 0; i < 150; i++) 
+        for (int i = 0; i < 10; i++) 
         {
             Temporal[i]=0;    
         }
                 
-        for (int i = 0; i < 150; i++) 
+        for (int i = 0; i < 10; i++) 
         {
             Procesos_marcados[i]=false;    
         }
         
-        for (int i = 0; i < 150; i++) 
+        for (int i = 0; i < 10; i++) 
         {
-            for (int j = 0; j < 150; j++) 
+            for (int j = 0; j < 10; j++) 
             {
                 Maximos[i][j]=0;
             }
         }
     
-        for (int i = 0; i < 150; i++) 
+        for (int i = 0; i < 10; i++) 
         {
             Procesos_eliminados[i]=0;           
         }
                 
-        for (int i = 0; i < 150; i++)
+        for (int i = 0; i < 10; i++)
         {
             Procesos_finalizados[i]=0;           
         }
                
-        for (int i = 0; i < 150; i++) 
+        for (int i = 0; i < 10; i++) 
         {
-            for (int j = 0; j < 150; j++) 
+            for (int j = 0; j < 10; j++) 
             {
                 Bloqueados[i][j]=0;
             }
         }
         
         //Se rellenan los vectores de 'Recursos' y 'Disponibles':
-        for (int i = 0; i < 150; i++) 
+        for (int i = 0; i < 10; i++) 
         {
             if (rec[i]!=null) 
             {
@@ -99,7 +99,7 @@ public class Deteccion
             
         }
         
-         for (int i = 0; i < 150; i++) 
+         for (int i = 0; i < 10; i++) 
          {
             if (rec[i]!=null) 
             {
@@ -171,7 +171,8 @@ public class Deteccion
                 {
                     Asignacion[id_Proceso][i] = Asignacion[id_Proceso][i] + solicitud[i];
                     Disponibles[i]=Disponibles[i] - solicitud[i];
-                }   
+                }
+            Consola_D.append("Asignado de forma segura \n");                
             }
             else 
             {
@@ -352,8 +353,10 @@ public class Deteccion
             }
         }
         
-        if (procesoFinalizo == true) {
-            for (int i = 0; i < Asignacion[id_Proceso][i]; i++) {
+        if (procesoFinalizo == true) 
+        {
+            for (int i = 0; i < Asignacion[id_Proceso][i]; i++) 
+            {
                 Disponibles[i] = Asignacion[id_Proceso][i];
                 Asignacion[id_Proceso][i] = 0;
                 Maximos[id_Proceso][i] = 0;
@@ -362,7 +365,7 @@ public class Deteccion
             Procesos_finalizados[id_Proceso]= 1;
             p_finalizados++;
             Procesos_sistema--;
-            Consola_D.append("Proceso num: "+id_Proceso+", finalizó exitosamente \n");
+            Consola_D.append("Proceso número: "+id_Proceso+", finalizó exitosamente \n");
         }
     }
     
@@ -380,19 +383,18 @@ public class Deteccion
     // Método que elimina un proceso:
     private void Eliminar_Proceso(int id_Proceso)
     {
-         
         for (int i = 0; i < Asignacion[id_Proceso][i]; i++) 
         {
-            
-            Disponibles[i]= Disponibles[i] + Asignacion[id_Proceso][i];
-            Asignacion[id_Proceso][i] = 0;
-            Maximos[id_Proceso][i] = 0;
+                Disponibles[i]= Disponibles[i] + Asignacion[id_Proceso][i];
+                Asignacion[id_Proceso][i] = 0;
+                Maximos[id_Proceso][i] = 0;
         }
-        
+
         Procesos_eliminados[id_Proceso] = 1;
         Pro_eliminados++;
         Procesos_sistema--;
-        Consola_D.append("Se eliminó el proceso: "+id_Proceso+" \n");                 
+        Consola_D.append("Se eliminó el proceso: "+id_Proceso+" \n");  
+        
     }
     
     //Método que comprueba si hay procesos eliminados:

@@ -6,7 +6,7 @@ import javax.swing.UIManager;
 
 public class Inicio 
 {
-
+    //Main:
     public static void main(String[] args) 
     {
         try 
@@ -18,9 +18,11 @@ public class Inicio
         ex.printStackTrace(); 
         }   
         
-        Recurso vecRecursos [] = new Recurso [150];
-        Proceso vecProcesos [] = new Proceso [150];
+        //Se crean los vectores correspondientes a Procesos y Recursos:
+        Recurso vecRecursos [] = new Recurso [10];
+        Proceso vecProcesos [] = new Proceso [10];
         
+        //Se inicia la interfaz con la que se designaran los Recursos a usar:
         InterfazRecursos ini = new InterfazRecursos(vecRecursos, vecProcesos);
         ini.setVisible(true);
    

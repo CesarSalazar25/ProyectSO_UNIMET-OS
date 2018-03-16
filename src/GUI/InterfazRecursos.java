@@ -7,18 +7,19 @@ package GUI;
 
 import Logica.Proceso;
 import Logica.Recurso;
+import javax.swing.JOptionPane;
 
-/*
- * @author César Salazar y Loredana de Miro
- */
+
 public class InterfazRecursos extends javax.swing.JFrame 
 {
-
+    //Variables:
+    private boolean flag; //Flag que impide que se pueda iniciar el programa sin al menos un recurso creado.
     private Proceso Vector_Procesos[]; 
     private Recurso Vector_Recursos[];
+    private int [] cant_max_recursos = new int[10];
     private int id_recurso = 0;
     
-
+    //Constructor:
     public InterfazRecursos(Recurso[] vecRecursos, Proceso[] vecProcesos) 
     {
         initComponents();
@@ -27,9 +28,12 @@ public class InterfazRecursos extends javax.swing.JFrame
         ListaNuevosRecursos.removeAllItems();
         this.Vector_Procesos = vecProcesos;
         this.Vector_Recursos = vecRecursos;
+        flag=true;
     }
 
-    private InterfazRecursos() {
+    //Constructor vacío:
+    private InterfazRecursos() 
+    {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
@@ -137,20 +141,42 @@ public class InterfazRecursos extends javax.swing.JFrame
             Recurso recurso = new Recurso ();
             recurso.setNombre(NombreRecurso.getText());
             recurso.setCantidad(Integer.parseInt(CantidadRecurso.getText()));
-            ListaNuevosRecursos.addItem(NombreRecurso.getText());
-            Vector_Recursos [id_recurso] = recurso;
-            id_recurso++;
+            
+            //Se evita que se puedan crear más recursos de los permitidos:
+            if(id_recurso<10)
+            {
+                ListaNuevosRecursos.addItem(NombreRecurso.getText());
+                Vector_Recursos [id_recurso] = recurso;
+                cant_max_recursos[id_recurso] = Integer.parseInt(CantidadRecurso.getText());
+                id_recurso++;
+                
+                //Para comprobar si crea los recursos:
+                System.out.println("Se creó el recurso: "+recurso.getNombre()+" que dispone de "+recurso.getCantidad()+" unidades.");
+            }
+            else
+            {
+                JOptionPane.showMessageDialog(null, "ERROR. Número de recursos creados máximos alcanzados.");
+            }
+            
+            flag=false;
             NombreRecurso.setText("");
             CantidadRecurso.setText("");
+        }
+        else
+        {
+            JOptionPane.showMessageDialog(null, "ERROR. Nombre del recurso o su cantidad no especificado.");
         }
 
     }//GEN-LAST:event_AgregarRecursoMouseClicked
 
     private void IniciarMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_IniciarMouseClicked
         // TODO add your handling code here:
-        InterfazSimulador main = new InterfazSimulador(Vector_Procesos,Vector_Recursos);
-        main.setVisible(true);
-        this.setVisible(false);
+        if(flag==false)
+        {
+            InterfazSimulador main = new InterfazSimulador(Vector_Procesos,Vector_Recursos, cant_max_recursos);
+            main.setVisible(true);
+            this.setVisible(false);
+        }
     }//GEN-LAST:event_IniciarMouseClicked
 
     private void CantidadRecursoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_CantidadRecursoActionPerformed

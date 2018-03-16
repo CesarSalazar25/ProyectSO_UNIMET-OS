@@ -9,14 +9,16 @@ import javax.swing.DefaultListModel;
 import javax.swing.JOptionPane;
 
 
-public class InterfazSimulador extends javax.swing.JFrame {
+public class InterfazSimulador extends javax.swing.JFrame 
+{
 
     //Variables:
     DefaultListModel modelo;
     private int id_proceso=0;
-    private int MaxCantRecursos [] = new int[150];
-    private Proceso Vector_Proceso [];
-    private Recurso Vector_Recurso [];
+    private int MaxCantRecursos [] = new int[10];
+    private Proceso Vector_Proceso[];
+    private Recurso Vector_Recurso[];
+    private int [] cant_max_recursos;
     private int id_recurso;
     private int Cont_ProcesosCreados = 0;
     private int Solicitudes = 0;
@@ -24,7 +26,7 @@ public class InterfazSimulador extends javax.swing.JFrame {
     public Deteccion Deteccion;
     
     //Constructor:
-    public InterfazSimulador(Proceso[] Vector_Proceso, Recurso[] Vector_Recurso ) 
+    public InterfazSimulador(Proceso[] Vector_Proceso, Recurso[] Vector_Recurso, int[] cant_max_recursos) 
     {
         initComponents();
         this.getContentPane().setBackground(Color.lightGray);
@@ -32,22 +34,24 @@ public class InterfazSimulador extends javax.swing.JFrame {
         setResizable(false);
         this.Vector_Proceso = Vector_Proceso;
         this.Vector_Recurso = Vector_Recurso;
+        this.cant_max_recursos = cant_max_recursos;
         this.Prediccion = new Prediccion (Vector_Recurso,ConsolePrediccion);
         this.Deteccion = new Deteccion (Vector_Recurso, ConsoleDeteccion);
         modelo = new DefaultListModel();
         ListaRecursosAsignados.setModel(modelo);
-        llenarComboBoxRecursos();
-        llenarComboBoxRecursoDelProceso ();
-        inicializarMaxCantRecursosPerProcess();
+        llenar_ComboBoxRecursos();
+        llenar_ComboBoxRecursosDelProceso();
+        inicializar_MaxCantRecursosxProcesos();
     }
     
-    //Constructor:
+    //Constructor vacío:
     private InterfazSimulador() 
     {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
     
-    private void inicializarMaxCantRecursosPerProcess () 
+    //Inicializa el vector con la cantidad máx. de recursos permitida por proceso:
+    private void inicializar_MaxCantRecursosxProcesos () 
     {
         for (int i = 0; i < MaxCantRecursos.length ; i++) 
         {
@@ -55,7 +59,8 @@ public class InterfazSimulador extends javax.swing.JFrame {
         } 
     }
     
-    private void llenarComboBoxRecursoDelProceso()
+    //Llena la ComboBox con los recursos asignados al proceso 'x':
+    private void llenar_ComboBoxRecursosDelProceso()
     {
         for (int i = 0; i < Vector_Recurso.length; i++) 
         {
@@ -66,7 +71,8 @@ public class InterfazSimulador extends javax.swing.JFrame {
         }
     }
     
-    private void llenarComboBoxRecursos()
+    //Llena la ComboBox con los recursos creados inicialmente:
+    private void llenar_ComboBoxRecursos()
     {
         for (int i = 0; i < Vector_Recurso.length; i++) 
         {
@@ -598,10 +604,11 @@ public class InterfazSimulador extends javax.swing.JFrame {
 
     private void CrearProcesoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_CrearProcesoActionPerformed
 
-        if (!"".equals(NombreProceso.getText()))
+  
+        if (!"".equals(NombreProceso.getText())&& id_proceso<10 && !modelo.isEmpty())
         {
-            int AuxMaxCantRecursosPerProcess[] = new int [150];
-            
+            int AuxMaxCantRecursosPerProcess[] = new int [10];
+
             for (int i = 0; i < AuxMaxCantRecursosPerProcess.length ; i++) 
             {
                 AuxMaxCantRecursosPerProcess[i]=MaxCantRecursos[i];
@@ -616,19 +623,31 @@ public class InterfazSimulador extends javax.swing.JFrame {
             id_proceso++;
             ListaProcesos.addItem(p.getNombre_proceso());
             modelo.removeAllElements();
-            NombreProceso.setText("");
+            NombreProceso.setText("");                
+            
+            for (int i = 0; i < MaxCantRecursos.length ; i++) 
+            {
+                MaxCantRecursos[i]=0;
+            }
+            Cont_ProcesosCreados++;
+            PprocesosCreados.setText(Integer.toString(Cont_ProcesosCreados));
+            DprocesosCreados.setText(Integer.toString(Cont_ProcesosCreados));
+
         }
-        else 
+        else if(id_proceso>=10)
         { 
-            JOptionPane.showMessageDialog(null, "ERROR: por favor Describa el nombre del proceso!");
+            JOptionPane.showMessageDialog(null, "ERROR. Se ha alcanzado el número máximo de procesos que pueden ser creados.");
+            modelo.removeAllElements();
         }
-        for (int i = 0; i < MaxCantRecursos.length ; i++) 
+        else if("".equals(NombreProceso.getText()))
         {
-            MaxCantRecursos[i]=0;
+            JOptionPane.showMessageDialog(null, "ERROR. Escriba el nombre del proceso.");
         }
-        Cont_ProcesosCreados++;
-        PprocesosCreados.setText(Integer.toString(Cont_ProcesosCreados));
-        DprocesosCreados.setText(Integer.toString(Cont_ProcesosCreados));
+        
+        else
+        {
+            JOptionPane.showMessageDialog(null, "ERROR.  No se puede crear proceso si no se han añadido recursos.");
+        }
 
     }//GEN-LAST:event_CrearProcesoActionPerformed
 
@@ -637,14 +656,18 @@ public class InterfazSimulador extends javax.swing.JFrame {
         id_recurso = ComboBoxTipoRecursos.getSelectedIndex();
         String Tipo_Recurso = ComboBoxTipoRecursos.getSelectedItem().toString();
 
-        if (Tipo_Recurso!=null && !"".equals(CMaxProceso.getText()))
+        if (Tipo_Recurso!=null && !"".equals(CMaxProceso.getText()) && !"".equals(NombreProceso.getText()) && Integer.parseInt(CMaxProceso.getText())<= cant_max_recursos[id_recurso] &&  Integer.parseInt(CMaxProceso.getText())>0)
         {
             modelo.addElement(" Recurso: "+Tipo_Recurso+"        "+"  Cantidad: "+CMaxProceso.getText());
             MaxCantRecursos[id_recurso]=Integer.parseInt(CMaxProceso.getText());
         }
+        else if("".equals(NombreProceso.getText()))
+        {
+            JOptionPane.showMessageDialog(null, "ERROR. Inserte un nombre al proceso a agregar recursos.");            
+        }
         else
         {
-            System.out.println("ERROR al agregar recurso ");
+            JOptionPane.showMessageDialog(null, "ERROR. Puede que algún parámetro introducido sea inválido.");
         }
 
         CMaxProceso.setText("");
@@ -667,9 +690,9 @@ public class InterfazSimulador extends javax.swing.JFrame {
         {
             int CantidadSolicitada = Integer.parseInt(NombreRecurso2.getText());
             
-            if ( CantidadSolicitada  <= Vector_Proceso[ListaProcesos.getSelectedIndex()].getCant_maxPOSICION(RecursoDelProceso.getSelectedIndex())) 
+            if ( CantidadSolicitada  <= Vector_Proceso[ListaProcesos.getSelectedIndex()].getCant_maxPOSICION(RecursoDelProceso.getSelectedIndex()) && CantidadSolicitada>0) 
             {
-                int AuxSolicitud [] = new int [150];
+                int AuxSolicitud [] = new int [10];
                 
                 for (int i = 0; i < AuxSolicitud.length ; i++) 
                 {
@@ -681,13 +704,13 @@ public class InterfazSimulador extends javax.swing.JFrame {
                 }
             else 
             {
-                JOptionPane.showMessageDialog(null, "ERROR: El recurso solicitado del proceso sobrepasa el max especificado! ");
+                JOptionPane.showMessageDialog(null, "ERROR. ¡Recurso solicitado para el proceso inválido! Puede que haya sobrepasado el máximo especificado o haya puesto un número negativo.");
             }
             
             }
             else
             {
-                JOptionPane.showMessageDialog(null, "ERROR: Este recurso no es usado por el proceso: "+Vector_Proceso[ListaProcesos.getSelectedIndex()].getNombre_proceso());
+                JOptionPane.showMessageDialog(null, "ERROR. Este recurso no es usado por el proceso: "+Vector_Proceso[ListaProcesos.getSelectedIndex()].getNombre_proceso());
             }
 
             Solicitudes++;
@@ -754,8 +777,10 @@ public class InterfazSimulador extends javax.swing.JFrame {
         //</editor-fold>
 
         /* Create and display the form */
-        java.awt.EventQueue.invokeLater(new Runnable() {
-            public void run() {
+        java.awt.EventQueue.invokeLater(new Runnable() 
+        {
+            public void run() 
+            {
                 new InterfazSimulador().setVisible(true);
             }
         });

@@ -6,7 +6,7 @@ public class Proceso
     //Variables:
     private String nombre_proceso;                  //Nombre del proceso a crear.
     private int id_proceso;                         //Id del proceso creado.
-    private int cant_max [] = new int [150];        //Vector que almacena la cantidad máxima de recursos que el proceso puede llegar a tener.
+    private int cant_max [] = new int [10];        //Vector que almacena la cantidad máxima de recursos que el proceso puede llegar a tener.
     
     //Constructor:
     public Proceso(String nombre_proceso, int id_proceso, int[] cant_max) 

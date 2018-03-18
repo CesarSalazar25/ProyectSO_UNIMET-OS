@@ -113,6 +113,7 @@ public class InterfazSimulador extends javax.swing.JFrame
         ListaRecursosAsignados = new javax.swing.JList();
         CrearProceso = new javax.swing.JButton();
         AgregarAProceso = new javax.swing.JButton();
+        jButton1 = new javax.swing.JButton();
         jPanel4 = new javax.swing.JPanel();
         jLabel17 = new javax.swing.JLabel();
         jLabel19 = new javax.swing.JLabel();
@@ -248,26 +249,48 @@ public class InterfazSimulador extends javax.swing.JFrame
         getContentPane().add(jPanel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(470, 90, 440, 200));
 
         jPanel1.setBackground(new java.awt.Color(153, 204, 255));
+        jPanel1.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         jLabel2.setFont(new java.awt.Font("Harvest", 0, 18)); // NOI18N
         jLabel2.setForeground(new java.awt.Color(0, 51, 153));
         jLabel2.setText("Introduccir Proceso");
+        jPanel1.add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(143, 0, -1, 38));
 
         jLabel3.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         jLabel3.setText("Nombre del Proceso");
+        jPanel1.add(jLabel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 44, -1, 31));
+
+        NombreProceso.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                NombreProcesoActionPerformed(evt);
+            }
+        });
+        jPanel1.add(NombreProceso, new org.netbeans.lib.awtextra.AbsoluteConstraints(143, 51, 84, -1));
+
+        ComboBoxTipoRecursos.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                ComboBoxTipoRecursosActionPerformed(evt);
+            }
+        });
+        jPanel1.add(ComboBoxTipoRecursos, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 110, 217, -1));
 
         jLabel4.setText("Selecciona el tipo de Recurso");
+        jPanel1.add(jLabel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 81, -1, 21));
 
         jLabel5.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         jLabel5.setText("Cantidad Máxima");
+        jPanel1.add(jLabel5, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 140, -1, 21));
 
         CMaxProceso.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 CMaxProcesoActionPerformed(evt);
             }
         });
+        jPanel1.add(CMaxProceso, new org.netbeans.lib.awtextra.AbsoluteConstraints(140, 140, 76, -1));
 
         jScrollPane1.setViewportView(ListaRecursosAsignados);
+
+        jPanel1.add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(240, 40, 186, 120));
 
         CrearProceso.setBackground(new java.awt.Color(0, 51, 153));
         CrearProceso.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
@@ -278,6 +301,7 @@ public class InterfazSimulador extends javax.swing.JFrame
                 CrearProcesoActionPerformed(evt);
             }
         });
+        jPanel1.add(CrearProceso, new org.netbeans.lib.awtextra.AbsoluteConstraints(370, 160, -1, -1));
 
         AgregarAProceso.setBackground(new java.awt.Color(0, 51, 153));
         AgregarAProceso.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
@@ -293,62 +317,17 @@ public class InterfazSimulador extends javax.swing.JFrame
                 AgregarAProcesoActionPerformed(evt);
             }
         });
+        jPanel1.add(AgregarAProceso, new org.netbeans.lib.awtextra.AbsoluteConstraints(240, 160, -1, -1));
 
-        javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
-        jPanel1.setLayout(jPanel1Layout);
-        jPanel1Layout.setHorizontalGroup(
-            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel1Layout.createSequentialGroup()
-                .addContainerGap()
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                                .addGroup(jPanel1Layout.createSequentialGroup()
-                                    .addComponent(jLabel5)
-                                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                    .addComponent(CMaxProceso, javax.swing.GroupLayout.PREFERRED_SIZE, 76, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                .addGroup(jPanel1Layout.createSequentialGroup()
-                                    .addComponent(jLabel3)
-                                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                    .addComponent(NombreProceso, javax.swing.GroupLayout.PREFERRED_SIZE, 84, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                .addComponent(ComboBoxTipoRecursos, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                            .addComponent(jLabel4))
-                        .addGap(18, 18, 18)
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 186, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addGroup(jPanel1Layout.createSequentialGroup()
-                                .addComponent(AgregarAProceso, javax.swing.GroupLayout.PREFERRED_SIZE, 90, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                .addComponent(CrearProceso, javax.swing.GroupLayout.PREFERRED_SIZE, 90, javax.swing.GroupLayout.PREFERRED_SIZE))))
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addGap(133, 133, 133)
-                        .addComponent(jLabel2)))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-        );
-        jPanel1Layout.setVerticalGroup(
-            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel1Layout.createSequentialGroup()
-                .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 38, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 31, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(NombreProceso))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jLabel4, javax.swing.GroupLayout.PREFERRED_SIZE, 21, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(ComboBoxTipoRecursos, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE))
-                .addGap(18, 18, 18)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel5, javax.swing.GroupLayout.PREFERRED_SIZE, 21, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(CMaxProceso)
-                    .addComponent(AgregarAProceso, javax.swing.GroupLayout.PREFERRED_SIZE, 33, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(CrearProceso, javax.swing.GroupLayout.PREFERRED_SIZE, 33, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(21, 21, 21))
-        );
+        jButton1.setBackground(new java.awt.Color(0, 51, 153));
+        jButton1.setForeground(new java.awt.Color(255, 255, 255));
+        jButton1.setText("Borrar");
+        jButton1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton1ActionPerformed(evt);
+            }
+        });
+        jPanel1.add(jButton1, new org.netbeans.lib.awtextra.AbsoluteConstraints(310, 160, -1, -1));
 
         getContentPane().add(jPanel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 90, 440, 200));
 
@@ -360,19 +339,19 @@ public class InterfazSimulador extends javax.swing.JFrame
         jLabel17.setText("Método de Detección");
         jPanel4.add(jLabel17, new org.netbeans.lib.awtextra.AbsoluteConstraints(151, 0, 188, 38));
 
-        jLabel19.setText("Número de Procesos creados");
+        jLabel19.setText("Nro. de Procesos creados");
         jPanel4.add(jLabel19, new org.netbeans.lib.awtextra.AbsoluteConstraints(24, 44, 171, 21));
 
-        jLabel26.setText("Números de Solicitudes realizadas");
+        jLabel26.setText("Nro. de Solicitudes realizadas");
         jPanel4.add(jLabel26, new org.netbeans.lib.awtextra.AbsoluteConstraints(24, 98, 171, 21));
 
-        jLabel27.setText("Número de Procesos en Sistema");
+        jLabel27.setText("Nro. de Procesos en Sistema");
         jPanel4.add(jLabel27, new org.netbeans.lib.awtextra.AbsoluteConstraints(24, 71, 171, 21));
 
         jLabel28.setText("Total de Procesos Bloqueados");
         jPanel4.add(jLabel28, new org.netbeans.lib.awtextra.AbsoluteConstraints(24, 152, 171, 21));
 
-        jLabel29.setText("Número de Procesos Bloqueados");
+        jLabel29.setText("Nro. de Procesos Bloqueados");
         jPanel4.add(jLabel29, new org.netbeans.lib.awtextra.AbsoluteConstraints(24, 125, 171, 21));
 
         jLabel30.setText("Total de Procesos Eliminados");
@@ -407,7 +386,7 @@ public class InterfazSimulador extends javax.swing.JFrame
         ConsoleDeteccion.setRows(5);
         jScrollPane3.setViewportView(ConsoleDeteccion);
 
-        jPanel4.add(jScrollPane3, new org.netbeans.lib.awtextra.AbsoluteConstraints(247, 44, 160, 170));
+        jPanel4.add(jScrollPane3, new org.netbeans.lib.awtextra.AbsoluteConstraints(247, 44, 160, 160));
 
         getContentPane().add(jPanel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(470, 300, 440, -1));
 
@@ -420,19 +399,19 @@ public class InterfazSimulador extends javax.swing.JFrame
         jLabel10.setText("Método de Predicción");
         jPanel3.add(jLabel10, new org.netbeans.lib.awtextra.AbsoluteConstraints(108, 0, 193, 38));
 
-        jLabel11.setText("Número de Procesos creados");
+        jLabel11.setText("Nro. de Procesos creados");
         jPanel3.add(jLabel11, new org.netbeans.lib.awtextra.AbsoluteConstraints(24, 44, 171, 21));
 
-        jLabel12.setText("Números de Solicitudes realizadas");
+        jLabel12.setText("Nro. de Solicitudes realizadas");
         jPanel3.add(jLabel12, new org.netbeans.lib.awtextra.AbsoluteConstraints(24, 98, 171, 21));
 
-        jLabel13.setText("Número de Procesos en Sistema");
+        jLabel13.setText("Nro. de Procesos en Sistema");
         jPanel3.add(jLabel13, new org.netbeans.lib.awtextra.AbsoluteConstraints(24, 71, 171, 21));
 
         jLabel14.setText("Total de Procesos Bloqueados");
         jPanel3.add(jLabel14, new org.netbeans.lib.awtextra.AbsoluteConstraints(24, 152, 171, 21));
 
-        jLabel15.setText("Número de Procesos Bloqueados");
+        jLabel15.setText("Nro. de Procesos Bloqueados");
         jPanel3.add(jLabel15, new org.netbeans.lib.awtextra.AbsoluteConstraints(24, 125, 171, 21));
 
         jLabel16.setText("Total de Procesos Finalizados");
@@ -467,7 +446,7 @@ public class InterfazSimulador extends javax.swing.JFrame
         ConsolePrediccion.setRows(5);
         jScrollPane2.setViewportView(ConsolePrediccion);
 
-        jPanel3.add(jScrollPane2, new org.netbeans.lib.awtextra.AbsoluteConstraints(247, 44, 160, 170));
+        jPanel3.add(jScrollPane2, new org.netbeans.lib.awtextra.AbsoluteConstraints(247, 44, 160, 160));
 
         getContentPane().add(jPanel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 300, 440, -1));
 
@@ -549,6 +528,10 @@ public class InterfazSimulador extends javax.swing.JFrame
 
     private void AgregarAProcesoMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_AgregarAProcesoMouseClicked
 
+    }//GEN-LAST:event_AgregarAProcesoMouseClicked
+
+    private void AgregarAProcesoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_AgregarAProcesoActionPerformed
+
         id_recurso = ComboBoxTipoRecursos.getSelectedIndex();
         String Tipo_Recurso = ComboBoxTipoRecursos.getSelectedItem().toString();
 
@@ -567,11 +550,6 @@ public class InterfazSimulador extends javax.swing.JFrame
         }
 
         CMaxProceso.setText("");
-
-    }//GEN-LAST:event_AgregarAProcesoMouseClicked
-
-    private void AgregarAProcesoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_AgregarAProcesoActionPerformed
-
     }//GEN-LAST:event_AgregarAProcesoActionPerformed
 
     private void ListaProcesosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ListaProcesosActionPerformed
@@ -579,8 +557,11 @@ public class InterfazSimulador extends javax.swing.JFrame
     }//GEN-LAST:event_ListaProcesosActionPerformed
 
     private void SolicitarMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_SolicitarMouseClicked
+    
+    }//GEN-LAST:event_SolicitarMouseClicked
 
-    if (!"".equals(NombreRecurso2.getText()))
+    private void SolicitarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_SolicitarActionPerformed
+            if (!"".equals(NombreRecurso2.getText()))
     {
         if (Vector_Proceso[ListaProcesos.getSelectedIndex()].getCant_maxPOSICION(RecursoDelProceso.getSelectedIndex())!=0) 
         {
@@ -627,11 +608,6 @@ public class InterfazSimulador extends javax.swing.JFrame
             DprocesosSistema.setText(Integer.toString(Deteccion.getProcesos_sistema()));
 
     }
-    
-    }//GEN-LAST:event_SolicitarMouseClicked
-
-    private void SolicitarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_SolicitarActionPerformed
-        // TODO add your handling code here:
     }//GEN-LAST:event_SolicitarActionPerformed
 
     private void NombreRecurso2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_NombreRecurso2ActionPerformed
@@ -641,6 +617,19 @@ public class InterfazSimulador extends javax.swing.JFrame
     private void exitActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_exitActionPerformed
             System.exit(0);      
     }//GEN-LAST:event_exitActionPerformed
+
+    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+
+            modelo.removeAllElements();     
+    }//GEN-LAST:event_jButton1ActionPerformed
+
+    private void ComboBoxTipoRecursosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ComboBoxTipoRecursosActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_ComboBoxTipoRecursosActionPerformed
+
+    private void NombreProcesoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_NombreProcesoActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_NombreProcesoActionPerformed
 
     /**
      * @param args the command line arguments
@@ -710,6 +699,7 @@ public class InterfazSimulador extends javax.swing.JFrame
     private javax.swing.JComboBox RecursoDelProceso;
     private javax.swing.JButton Solicitar;
     private javax.swing.JButton exit;
+    private javax.swing.JButton jButton1;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel11;

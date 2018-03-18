@@ -365,7 +365,7 @@ public class Deteccion
             Procesos_finalizados[id_Proceso]= 1;
             p_finalizados++;
             Procesos_sistema--;
-            Consola_D.append("Proceso número: "+id_Proceso+", finalizó exitosamente \n");
+            Consola_D.append("Proceso: "+id_Proceso+", finalizó exitosamente \n");
         }
     }
     
@@ -383,13 +383,12 @@ public class Deteccion
     // Método que elimina un proceso:
     private void Eliminar_Proceso(int id_Proceso)
     {
-        for (int i = 0; i < Asignacion[id_Proceso][i]; i++) 
+        for (int i = 0; i <= Asignacion[id_Proceso][i]; i++) 
         {
-                Disponibles[i]= Disponibles[i] + Asignacion[id_Proceso][i];
+                Disponibles[i]= Disponibles[i]+Asignacion[id_Proceso][i];
                 Asignacion[id_Proceso][i] = 0;
                 Maximos[id_Proceso][i] = 0;
         }
-
         Procesos_eliminados[id_Proceso] = 1;
         Pro_eliminados++;
         Procesos_sistema--;

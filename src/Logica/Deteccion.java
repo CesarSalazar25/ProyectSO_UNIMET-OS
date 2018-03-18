@@ -383,7 +383,7 @@ public class Deteccion
     // Método que elimina un proceso:
     private void Eliminar_Proceso(int id_Proceso)
     {
-        for (int i = 0; i < Asignacion[id_Proceso][i]; i++) 
+        for (int i = 0; i <= Asignacion[id_Proceso][i]; i++) 
         {
                 Disponibles[i]= Disponibles[i] + Asignacion[id_Proceso][i];
                 Asignacion[id_Proceso][i] = 0;

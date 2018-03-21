@@ -104,58 +104,52 @@ public class Prediccion
     
     //Método que asigna los recursos a cada proceso:
     public boolean Asignar (int id_Proceso, int [] solicitud )
-    {
-        
-        boolean desbloquea = true;
-        boolean bloqueado = false;
-        
+    {   
+        boolean desbloquea = true;  //Por defecto el proceso esta desbloqueado al momento de la solicitud 
+        //boolean bloqueado = false;
+
+        //Se comprueba si hay un proceso Bloqueado o no:
         for (int i = 0; i < Bloqueados[id_Proceso].length; i++) 
         {
-            if (Bloqueados[id_Proceso][i] != solicitud[i]) 
+            if (Bloqueados[id_Proceso][i] < solicitud[i]) 
             {
                 desbloquea = false;
             }
-            
-            if (Bloqueados[id_Proceso][i] != 0) 
-            {
-                bloqueado = true;
-            }
         }
-        
+        //Se desbloquea el proceso de acuerdo al boleean obtenido de la comprobación previa:
         if (desbloquea == true) 
         {
             Desbloquear_Proceso (id_Proceso);
+            Consola_P.append("\nSe desbloqueó el proceso: "+id_Proceso+" \n");
             return true;
         }
-        else if (!bloqueado) 
+        
+        //Condiciones para asignar los recursso:
+        boolean conceder = true;
+        
+        //Se bloquea si se trata de asignar más recursos de los que hay disponibles
+        for (int i = 0; i < Recursos.length; i++) 
         {
-            
-            boolean conceder = true;
-            
-            for (int i = 0; i < Recursos.length; i++) 
+            if (solicitud[i] > Disponibles[i]) 
             {
-                if (solicitud[i] > Disponibles[i]) 
-                {
-                    conceder = false;
-                }
+                Bloquear_Proceso(id_Proceso, solicitud, 0);                
+                conceder = false;
             }
-            
-            if (conceder == true) 
-            {
-                
-                for (int i = 0; i <Recursos.length; i++) 
-                {
-                    Asignacion[id_Proceso][i] = Asignacion[id_Proceso][i] + solicitud[i];
-                    Disponibles[i]= Disponibles[i] - solicitud[i];
-                }   
-            }
-            else 
-            {
-                Bloquear_Proceso(id_Proceso, solicitud, 0);
-            }
-            return true;    
         }
-        else
+        
+        //Se asignan los recursos:
+        if (conceder == true) 
+        {
+                
+            for (int i = 0; i <Recursos.length; i++) 
+            {
+                Asignacion[id_Proceso][i] = Asignacion[id_Proceso][i] + solicitud[i];
+                Disponibles[i]= Disponibles[i] - solicitud[i];
+            }
+            return true; 
+        }
+        //No se asignan los recursos:
+        else 
         {
             return false;
         }
@@ -173,11 +167,12 @@ public class Prediccion
                 Bloqueados[id_Proceso][i] = solicitud[i];
                 Asignacion[id_Proceso][i] = Asignacion[id_Proceso][i] - solicitud[i];
                 Disponibles[i] = Disponibles[i] + solicitud[i];
+                //System.out.println("No se asigno: "+Disponibles[i]);
                  
             }
             Pro_bloqueados++;
             Pro_bloq_Total++;
-            Consola_P.append("Se bloqueó el proceso "+id_Proceso+" \n");
+            Consola_P.append("\nSe bloqueó el proceso "+id_Proceso+" \n");
             Consola_P.append("La asignación del recurso no pudo darse \n");
         }
         else
@@ -188,7 +183,7 @@ public class Prediccion
             }
             Pro_bloqueados++;
             Pro_bloq_Total++;
-            Consola_P.append("Se bloqueó el proceso "+id_Proceso+" \n");
+            Consola_P.append("\nSe bloqueó el proceso "+id_Proceso+" \n");
             Consola_P.append("La asignación del recurso no pudo darse \n");
         }
     }
@@ -209,7 +204,6 @@ public class Prediccion
     //Método que calcula la matriz Necesidad (Máximos-Asignación):
     public void Calculo_Necesidad() 
     {
-        
         for (int i = 0; i < 10; i++) 
         {
             for (int j = 0; j < cant_recursos; j++) 
@@ -219,10 +213,9 @@ public class Prediccion
         }
     }
  
-    //Método que chequea si todos los recursos para el proceso pueden ser Asignación:
+    //Método que chequea si todos los recursos para el proceso pueden ser asignados:
     public boolean chequear(int i, int [] auxiliar) 
     {
-        
         for (int j = 0; j < cant_recursos; j++) 
         {
             if (auxiliar[j] < Necesidad[i][j]) 
@@ -230,11 +223,10 @@ public class Prediccion
                 return false;
             }
         }
- 
         return true;
     }
  
-    //Método es Seguro: 
+    //Método que comprueba si el estado del sistema es Seguro o no (Algoritmo del Banquero): 
     public boolean esSeguro(int id_Proceso) 
     {
 
@@ -247,6 +239,7 @@ public class Prediccion
             Auxiliar[x] = Disponibles[x];
         }
         
+        //Hasta que todos los procesos se asignen
         while (j < cant_procesos) 
         {     
             boolean asignado = false;
@@ -274,15 +267,15 @@ public class Prediccion
         
         if (j == cant_procesos) 
         {
-            Consola_P.append("Asignado de forma segura \n");
+            Consola_P.append("\nAsignado de forma segura \n");
             return true;
         } 
         else 
         {
-            System.out.println("Todos los procesos se pueden asignar de forma segura");
+            //Consola_P.append("\nEstado Seguro, todos los procesos se pueden asignar de forma segura \n");
             return false;
-        } 
-    }
+        }
+    } 
     
     //Método que ejecuta el algoritmo:
     public void Ejecutar(int id_Proceso, int [] solicitud)
@@ -299,6 +292,7 @@ public class Prediccion
             {
                 if(esSeguro(id_Proceso) == false)
                 {
+                   //Se bloquea el proceso que realizó la solicitud y se devuelve la solicitud a Disponibles 
                    Bloquear_Proceso(id_Proceso, solicitud, 1);
                 }
                 else
@@ -307,7 +301,7 @@ public class Prediccion
                 }
             }
             else
-                 Consola_P.append("Solicitud Negada \n");
+                 Consola_P.append("\nSolicitud Negada \n");
         }
         long finishTime = System.nanoTime();
         tiempo = (finishTime-tiempoAux)/1000000;
@@ -329,17 +323,18 @@ public class Prediccion
         
         if (procesoFinalizo == true) 
         {
-            for (int i = 0; i < Asignacion[id_Proceso][i]; i++) 
+            for (int i = 0; i < Asignacion[id_Proceso].length; i++) 
             {
-                Disponibles[i] = Asignacion[id_Proceso][i];
+                Disponibles[i] = Disponibles[i]+Asignacion[id_Proceso][i];
                 Asignacion[id_Proceso][i] = 0;
                 Maximos[id_Proceso][i] = 0;
+                //System.out.println("Pre al finalizar: "+Disponibles[i]);
             }
             
             Procesos_finalizados[id_Proceso]= 1;
             Pro_finalizados++;
             Procesos_sistema--;
-            Consola_P.append("Proceso numero: "+id_Proceso+", finalizó exitosamente \n");
+            Consola_P.append("\nProceso numero: "+id_Proceso+", finalizó exitosamente \n");
         }
     }
     
@@ -525,7 +520,5 @@ public class Prediccion
     {
         this.Procesos_Totales = Procesos_Totales;
     }
-    
-    
-    
+  
 }

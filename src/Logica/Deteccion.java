@@ -130,60 +130,55 @@ public class Deteccion
     public boolean Asignar_Recursos (int id_Proceso, int [] solicitud )
     {
         
-        boolean desbloquea = true;
-        boolean bloqueado = false;
+        boolean desbloquea = true;  //Por defecto el proceso esta desbloqueado al momento de la solicitud
         
+        //Se comprueba si hay un proceso Bloqueado o no:        
         for (int i = 0; i < Bloqueados[id_Proceso].length; i++) 
         {
             if (Bloqueados[id_Proceso][i] != solicitud[i]) 
             {
                 desbloquea = false;
             }
-            
-            if (Bloqueados[id_Proceso][i] != 0) 
-            {
-                bloqueado = true;
-            }
         }
         
+        //Se desbloquea el proceso de acuerdo al boleean obtenido de la comprobación previa:        
         if (desbloquea == true) 
         {
             Desbloquear_Proceso(id_Proceso);
+            Consola_D.append("\nSe desbloqueó el proceso: "+id_Proceso+" \n");            
             return true;
         }
-        else if (bloqueado == false) 
+        
+        //Condiciones para asignar los recursso:
+        boolean conceder = true;
+        
+        //Se bloquea si se trata de asignar más recursos de los que hay disponibles
+        for (int i = 0; i < Recursos.length; i++) 
         {
-            boolean conceder = true;
-            
-            for (int i = 0; i < Disponibles.length; i++)
+            if (solicitud[i] > Disponibles[i]) 
             {
-                
-                if (solicitud[i] > Disponibles[i]) 
-                {
-                    conceder = false;
-                }
+                Bloquear_Proceso(id_Proceso, solicitud);                
+                conceder = false;
             }
-            
-            if (conceder == true) 
-            {
-                
-                for (int i = 0; i <Disponibles.length; i++) 
-                {
-                    Asignacion[id_Proceso][i] = Asignacion[id_Proceso][i] + solicitud[i];
-                    Disponibles[i]=Disponibles[i] - solicitud[i];
-                }
-            Consola_D.append("Asignado de forma segura \n");                
-            }
-            else 
-            {
-                Bloquear_Proceso(id_Proceso, solicitud);
-            }
-            return true;    
         }
-        else
+        
+        //Se asignan los recursos:
+        if (conceder == true) 
+        {
+                
+            for (int i = 0; i <Recursos.length; i++) 
+            {
+                Asignacion[id_Proceso][i] = Asignacion[id_Proceso][i] + solicitud[i];
+                Disponibles[i]= Disponibles[i] - solicitud[i];
+            }
+            Consola_D.append("\nAsignado de forma segura \n");            
+            return true; 
+        }
+        //No se asignan los recursos:
+        else 
         {
             return false;
-        }
+        }        
     }
     
     // Metodo que bloquea a un proceso:
@@ -196,7 +191,8 @@ public class Deteccion
         }
         bloqueo_actual++;
         Pro_bloq_Total++;
-        Consola_D.append("Se bloqueó el proceso: "+id_Proceso+" \n");
+        Consola_D.append("\nSe bloqueó el proceso: "+id_Proceso+" \n");
+        Consola_D.append("La asignación del recurso no pudo darse \n");
     }
     
     // Método que desbloquea a un proceso:
@@ -209,7 +205,6 @@ public class Deteccion
             Bloqueados [id_Proceso][i] = 0;
         }
         bloqueo_actual--;
-        Consola_D.append("Se desbloqueó el proceso: "+id_Proceso+" \n");
     }
     
     // Método que calcula la matriz Necesidad (Máximos-Asignación):
@@ -355,17 +350,18 @@ public class Deteccion
         
         if (procesoFinalizo == true) 
         {
-            for (int i = 0; i < Asignacion[id_Proceso][i]; i++) 
+            for (int i = 0; i < Asignacion[id_Proceso].length; i++) 
             {
                 Disponibles[i] = Asignacion[id_Proceso][i];
                 Asignacion[id_Proceso][i] = 0;
                 Maximos[id_Proceso][i] = 0;
+                //System.out.println("DET al finalizar: "+Disponibles[i]);
             }
             
             Procesos_finalizados[id_Proceso]= 1;
             p_finalizados++;
             Procesos_sistema--;
-            Consola_D.append("Proceso: "+id_Proceso+", finalizó exitosamente \n");
+            Consola_D.append("\nProceso: "+id_Proceso+", finalizó exitosamente \n");
         }
     }
     
@@ -383,16 +379,17 @@ public class Deteccion
     // Método que elimina un proceso:
     private void Eliminar_Proceso(int id_Proceso)
     {
-        for (int i = 0; i <= Asignacion[id_Proceso][i]; i++) 
+        for (int i = 0; i < Asignacion[id_Proceso].length; i++) 
         {
                 Disponibles[i]= Disponibles[i]+Asignacion[id_Proceso][i];
                 Asignacion[id_Proceso][i] = 0;
                 Maximos[id_Proceso][i] = 0;
+                //System.out.println("DET al eliminar: "+Disponibles[i]);
         }
         Procesos_eliminados[id_Proceso] = 1;
         Pro_eliminados++;
         Procesos_sistema--;
-        Consola_D.append("Se eliminó el proceso: "+id_Proceso+" \n");  
+        Consola_D.append("\nSe eliminó el proceso: "+id_Proceso+" \n");  
         
     }
     

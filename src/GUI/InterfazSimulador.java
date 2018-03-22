@@ -24,6 +24,7 @@ public class InterfazSimulador extends javax.swing.JFrame
     private int Solicitudes = 0;
     public Prediccion Prediccion;
     public Deteccion Deteccion;
+    private Object Consola_P;
     
     //Constructor:
     public InterfazSimulador(Proceso[] Vector_Proceso, Recurso[] Vector_Recurso, int[] cant_max_recursos) 
@@ -132,6 +133,7 @@ public class InterfazSimulador extends javax.swing.JFrame
         Dtiempo = new javax.swing.JLabel();
         jScrollPane3 = new javax.swing.JScrollPane();
         ConsoleDeteccion = new javax.swing.JTextArea();
+        limpiarDeteccion = new javax.swing.JButton();
         jPanel3 = new javax.swing.JPanel();
         jLabel10 = new javax.swing.JLabel();
         jLabel11 = new javax.swing.JLabel();
@@ -150,12 +152,12 @@ public class InterfazSimulador extends javax.swing.JFrame
         Ptiempo = new javax.swing.JLabel();
         jScrollPane2 = new javax.swing.JScrollPane();
         ConsolePrediccion = new javax.swing.JTextArea();
+        limpiarPrediccion = new javax.swing.JButton();
         jLabel20 = new javax.swing.JLabel();
         exit = new javax.swing.JButton();
         jLabel1 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
-        setUndecorated(true);
         getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         jPanel2.setBackground(new java.awt.Color(153, 204, 255));
@@ -388,7 +390,17 @@ public class InterfazSimulador extends javax.swing.JFrame
 
         jPanel4.add(jScrollPane3, new org.netbeans.lib.awtextra.AbsoluteConstraints(247, 44, 160, 160));
 
-        getContentPane().add(jPanel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(470, 300, 440, -1));
+        limpiarDeteccion.setBackground(new java.awt.Color(0, 51, 153));
+        limpiarDeteccion.setForeground(new java.awt.Color(255, 255, 255));
+        limpiarDeteccion.setText("Limpiar");
+        limpiarDeteccion.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                limpiarDeteccionActionPerformed(evt);
+            }
+        });
+        jPanel4.add(limpiarDeteccion, new org.netbeans.lib.awtextra.AbsoluteConstraints(350, 220, -1, -1));
+
+        getContentPane().add(jPanel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(470, 300, 440, 260));
 
         jPanel3.setBackground(new java.awt.Color(153, 204, 255));
         jPanel3.setForeground(new java.awt.Color(0, 153, 153));
@@ -448,7 +460,17 @@ public class InterfazSimulador extends javax.swing.JFrame
 
         jPanel3.add(jScrollPane2, new org.netbeans.lib.awtextra.AbsoluteConstraints(247, 44, 160, 160));
 
-        getContentPane().add(jPanel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 300, 440, -1));
+        limpiarPrediccion.setBackground(new java.awt.Color(0, 51, 153));
+        limpiarPrediccion.setForeground(new java.awt.Color(255, 255, 255));
+        limpiarPrediccion.setText("Limpiar");
+        limpiarPrediccion.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                limpiarPrediccionActionPerformed(evt);
+            }
+        });
+        jPanel3.add(limpiarPrediccion, new org.netbeans.lib.awtextra.AbsoluteConstraints(350, 220, -1, -1));
+
+        getContentPane().add(jPanel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 300, 440, 260));
 
         jLabel20.setFont(new java.awt.Font("Harvest", 1, 48)); // NOI18N
         jLabel20.setForeground(new java.awt.Color(255, 255, 255));
@@ -468,7 +490,7 @@ public class InterfazSimulador extends javax.swing.JFrame
         jLabel1.setBackground(new java.awt.Color(255, 255, 255));
         jLabel1.setForeground(new java.awt.Color(255, 255, 255));
         jLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/wallpapers-musica-fondos-de-pantalla-plan-alta-tecnolog-a-electr-nica-neon-un-1366x768.jpg"))); // NOI18N
-        getContentPane().add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 940, 570));
+        getContentPane().add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 940, 610));
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
@@ -631,6 +653,16 @@ public class InterfazSimulador extends javax.swing.JFrame
         // TODO add your handling code here:
     }//GEN-LAST:event_NombreProcesoActionPerformed
 
+    private void limpiarPrediccionActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_limpiarPrediccionActionPerformed
+        ConsolePrediccion.setText("");
+
+    }//GEN-LAST:event_limpiarPrediccionActionPerformed
+
+    private void limpiarDeteccionActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_limpiarDeteccionActionPerformed
+        ConsoleDeteccion.setText("");
+
+    }//GEN-LAST:event_limpiarDeteccionActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -733,5 +765,7 @@ public class InterfazSimulador extends javax.swing.JFrame
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JScrollPane jScrollPane3;
+    private javax.swing.JButton limpiarDeteccion;
+    private javax.swing.JButton limpiarPrediccion;
     // End of variables declaration//GEN-END:variables
 }

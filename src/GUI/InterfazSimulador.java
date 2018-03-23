@@ -154,7 +154,6 @@ public class InterfazSimulador extends javax.swing.JFrame
         ConsolePrediccion = new javax.swing.JTextArea();
         limpiarPrediccion = new javax.swing.JButton();
         jLabel20 = new javax.swing.JLabel();
-        exit = new javax.swing.JButton();
         jLabel1 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
@@ -183,6 +182,11 @@ public class InterfazSimulador extends javax.swing.JFrame
         NombreRecurso2.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 NombreRecurso2ActionPerformed(evt);
+            }
+        });
+        NombreRecurso2.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                NombreRecurso2KeyTyped(evt);
             }
         });
 
@@ -286,6 +290,11 @@ public class InterfazSimulador extends javax.swing.JFrame
         CMaxProceso.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 CMaxProcesoActionPerformed(evt);
+            }
+        });
+        CMaxProceso.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                CMaxProcesoKeyTyped(evt);
             }
         });
         jPanel1.add(CMaxProceso, new org.netbeans.lib.awtextra.AbsoluteConstraints(140, 140, 76, -1));
@@ -477,16 +486,6 @@ public class InterfazSimulador extends javax.swing.JFrame
         jLabel20.setText("UNIMET OS");
         getContentPane().add(jLabel20, new org.netbeans.lib.awtextra.AbsoluteConstraints(330, 0, -1, -1));
 
-        exit.setBackground(new java.awt.Color(0, 51, 153));
-        exit.setForeground(new java.awt.Color(255, 255, 255));
-        exit.setText("Salir");
-        exit.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                exitActionPerformed(evt);
-            }
-        });
-        getContentPane().add(exit, new org.netbeans.lib.awtextra.AbsoluteConstraints(880, 0, -1, -1));
-
         jLabel1.setBackground(new java.awt.Color(255, 255, 255));
         jLabel1.setForeground(new java.awt.Color(255, 255, 255));
         jLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/wallpapers-musica-fondos-de-pantalla-plan-alta-tecnolog-a-electr-nica-neon-un-1366x768.jpg"))); // NOI18N
@@ -636,10 +635,6 @@ public class InterfazSimulador extends javax.swing.JFrame
         // TODO add your handling code here:
     }//GEN-LAST:event_NombreRecurso2ActionPerformed
 
-    private void exitActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_exitActionPerformed
-            System.exit(0);      
-    }//GEN-LAST:event_exitActionPerformed
-
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
 
             modelo.removeAllElements();     
@@ -662,6 +657,32 @@ public class InterfazSimulador extends javax.swing.JFrame
         ConsoleDeteccion.setText("");
 
     }//GEN-LAST:event_limpiarDeteccionActionPerformed
+
+    private void CMaxProcesoKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_CMaxProcesoKeyTyped
+            
+            char c=evt.getKeyChar();
+            if(Character.isLetter(c)) {
+              getToolkit().beep();
+              
+              evt.consume();
+              
+              JOptionPane.showMessageDialog(null, "ERROR. Ingrese sólo números");
+              
+          }
+    }//GEN-LAST:event_CMaxProcesoKeyTyped
+
+    private void NombreRecurso2KeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_NombreRecurso2KeyTyped
+          
+          char c=evt.getKeyChar();
+          if(Character.isLetter(c)) {
+              getToolkit().beep();
+              
+              evt.consume();
+              
+              JOptionPane.showMessageDialog(null, "ERROR. Ingrese sólo números");
+              
+          }
+    }//GEN-LAST:event_NombreRecurso2KeyTyped
 
     /**
      * @param args the command line arguments
@@ -730,7 +751,6 @@ public class InterfazSimulador extends javax.swing.JFrame
     private javax.swing.JLabel PtotalElim;
     private javax.swing.JComboBox RecursoDelProceso;
     private javax.swing.JButton Solicitar;
-    private javax.swing.JButton exit;
     private javax.swing.JButton jButton1;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;

@@ -120,7 +120,7 @@ public class Prediccion
         if (desbloquea == true) 
         {
             Desbloquear_Proceso (id_Proceso);
-            Consola_P.append("\nSe desbloqueó el proceso: "+id_Proceso+" \n");
+            //Consola_P.append("\nSe desbloqueó el proceso: "+id_Proceso+" \n");
             return true;
         }
         
@@ -167,7 +167,7 @@ public class Prediccion
                 Bloqueados[id_Proceso][i] = solicitud[i];
                 Asignacion[id_Proceso][i] = Asignacion[id_Proceso][i] - solicitud[i];
                 Disponibles[i] = Disponibles[i] + solicitud[i];
-                //System.out.println("No se asigno: "+Disponibles[i]);
+                System.out.println("No se asigno al Bloquear Pre: "+Disponibles[i]);
                  
             }
             Pro_bloqueados++;
@@ -303,6 +303,10 @@ public class Prediccion
             else
                  Consola_P.append("\nSolicitud Negada \n");
         }
+        else
+        {
+                Consola_P.append("\nAl proceso "+id_Proceso+" no es posible asignarle recursos, puesto que ha finalizado su ejecución \n");            
+        }
         long finishTime = System.nanoTime();
         tiempo = (finishTime-tiempoAux)/1000000;
         
@@ -325,10 +329,10 @@ public class Prediccion
         {
             for (int i = 0; i < Asignacion[id_Proceso].length; i++) 
             {
-                Disponibles[i] = Disponibles[i]+Asignacion[id_Proceso][i];
+                Disponibles[i] = Asignacion[id_Proceso][i];
                 Asignacion[id_Proceso][i] = 0;
                 Maximos[id_Proceso][i] = 0;
-                //System.out.println("Pre al finalizar: "+Disponibles[i]);
+                System.out.println("Pre al finalizar: "+Disponibles[i]);
             }
             
             Procesos_finalizados[id_Proceso]= 1;

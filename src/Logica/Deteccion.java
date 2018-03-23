@@ -17,8 +17,6 @@ public class Deteccion
     private boolean Procesos_marcados[]= new boolean [10];      //Vector de procesos marcados (proceso sin marcar, esta en un interbloqueo).
     private int cant_procesos;              
     private int cant_recursos;
-    private int p_finalizados=0;
-    private int p_eliminados=0;
     private int bloqueo_actual=0;
     private long tiempo=0;
     private int Pro_bloq_Total = 0;
@@ -145,7 +143,7 @@ public class Deteccion
         if (desbloquea == true) 
         {
             Desbloquear_Proceso(id_Proceso);
-            Consola_D.append("\nSe desbloqueó el proceso: "+id_Proceso+" \n");            
+            //Consola_D.append("\nSe desbloqueó el proceso: "+id_Proceso+" \n");            
             return true;
         }
         
@@ -187,7 +185,9 @@ public class Deteccion
     
         for (int i = 0; i <solicitud.length; i++) 
         {
-            Bloqueados[id_Proceso][i] = solicitud[i];    
+            Bloqueados[id_Proceso][i] = solicitud[i];
+            Asignacion[id_Proceso][i] = Asignacion[id_Proceso][i] - solicitud[i];
+            System.out.println("No se asigno al Bloquear Pre: "+Disponibles[i]);
         }
         bloqueo_actual++;
         Pro_bloq_Total++;
@@ -322,6 +322,10 @@ public class Deteccion
                Finalizar_Proceso(id_Procesos);    
             }
         }
+        else
+        {
+            Consola_D.append("\nAl proceso "+id_Procesos+" no es posible asignarle recursos, puesto que ha finalizado su ejecución y/o ha sido eliminado \n");
+        }
         
         for (int i = 0; i < Procesos_marcados.length; i++) 
         {
@@ -335,7 +339,7 @@ public class Deteccion
         
     }
     
-    // Metodo que finaliza el proceso
+    //Método que finaliza el proceso
     public void Finalizar_Proceso (int id_Proceso)
     {
         boolean procesoFinalizo = true;
@@ -355,11 +359,11 @@ public class Deteccion
                 Disponibles[i] = Asignacion[id_Proceso][i];
                 Asignacion[id_Proceso][i] = 0;
                 Maximos[id_Proceso][i] = 0;
-                //System.out.println("DET al finalizar: "+Disponibles[i]);
+                System.out.println("DET al finalizar: "+Disponibles[i]);
             }
             
             Procesos_finalizados[id_Proceso]= 1;
-            p_finalizados++;
+            Pro_finalizados++;
             Procesos_sistema--;
             Consola_D.append("\nProceso: "+id_Proceso+", finalizó exitosamente \n");
         }
@@ -376,15 +380,15 @@ public class Deteccion
             return false;
     }
     
-    // Método que elimina un proceso:
+    //Método que elimina un proceso:
     private void Eliminar_Proceso(int id_Proceso)
     {
         for (int i = 0; i < Asignacion[id_Proceso].length; i++) 
         {
-                Disponibles[i]= Disponibles[i]+Asignacion[id_Proceso][i];
+                Disponibles[i]= Asignacion[id_Proceso][i];
                 Asignacion[id_Proceso][i] = 0;
                 Maximos[id_Proceso][i] = 0;
-                //System.out.println("DET al eliminar: "+Disponibles[i]);
+                System.out.println("DET al eliminar: "+Disponibles[i]);
         }
         Procesos_eliminados[id_Proceso] = 1;
         Pro_eliminados++;
@@ -528,25 +532,6 @@ public class Deteccion
         this.cant_recursos = cant_recursos;
     }
 
-    public int getP_finalizados() 
-    {
-        return p_finalizados;
-    }
-
-    public void setP_finalizados(int p_finalizados) 
-    {
-        this.p_finalizados = p_finalizados;
-    }
-
-    public int getP_eliminados() 
-    {
-        return p_eliminados;
-    }
-
-    public void setP_eliminados(int p_eliminados) 
-    {
-        this.p_eliminados = p_eliminados;
-    }
 
     public int getBloqueo_actual() 
     {

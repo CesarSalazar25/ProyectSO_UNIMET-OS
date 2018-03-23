@@ -7,6 +7,7 @@ package GUI;
 
 import Logica.Proceso;
 import Logica.Recurso;
+import java.awt.event.KeyEvent;
 import javax.swing.JOptionPane;
 
 
@@ -55,7 +56,6 @@ public class InterfazRecursos extends javax.swing.JFrame
         Iniciar = new javax.swing.JButton();
         jLabel5 = new javax.swing.JLabel();
         ListaNuevosRecursos = new javax.swing.JComboBox();
-        exit = new javax.swing.JButton();
         jLabel1 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
@@ -93,6 +93,11 @@ public class InterfazRecursos extends javax.swing.JFrame
                 CantidadRecursoActionPerformed(evt);
             }
         });
+        CantidadRecurso.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                CantidadRecursoKeyTyped(evt);
+            }
+        });
         getContentPane().add(CantidadRecurso, new org.netbeans.lib.awtextra.AbsoluteConstraints(110, 170, 170, -1));
 
         Iniciar.setBackground(new java.awt.Color(0, 51, 204));
@@ -116,16 +121,6 @@ public class InterfazRecursos extends javax.swing.JFrame
         jLabel5.setText("Lista de Recursos");
         getContentPane().add(jLabel5, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 240, -1, -1));
         getContentPane().add(ListaNuevosRecursos, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 270, 310, -1));
-
-        exit.setBackground(new java.awt.Color(0, 51, 204));
-        exit.setForeground(new java.awt.Color(255, 255, 255));
-        exit.setText("Salir");
-        exit.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                exitActionPerformed(evt);
-            }
-        });
-        getContentPane().add(exit, new org.netbeans.lib.awtextra.AbsoluteConstraints(340, 10, -1, -1));
 
         jLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/wallpapers-musica-fondos-de-pantalla-plan-alta-tecnolog-a-electr-nica-neon-un-1366x768.jpg"))); // NOI18N
         getContentPane().add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(-660, -160, 1060, 520));
@@ -182,13 +177,24 @@ public class InterfazRecursos extends javax.swing.JFrame
         // TODO add your handling code here:
     }//GEN-LAST:event_CantidadRecursoActionPerformed
 
-    private void exitActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_exitActionPerformed
-        System.exit(0);
-    }//GEN-LAST:event_exitActionPerformed
-
     private void IniciarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_IniciarActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_IniciarActionPerformed
+
+    private void CantidadRecursoKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_CantidadRecursoKeyTyped
+        
+          char c=evt.getKeyChar();
+          if(Character.isLetter(c)) {
+              getToolkit().beep();
+              
+              evt.consume();
+              
+              JOptionPane.showMessageDialog(null, "ERROR. Ingrese sólo números");
+              
+          }
+        
+        
+    }//GEN-LAST:event_CantidadRecursoKeyTyped
 
     /**
      * @param args the command line arguments
@@ -235,7 +241,6 @@ public class InterfazRecursos extends javax.swing.JFrame
     private javax.swing.JButton Iniciar;
     private javax.swing.JComboBox ListaNuevosRecursos;
     private javax.swing.JTextField NombreRecurso;
-    private javax.swing.JButton exit;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;

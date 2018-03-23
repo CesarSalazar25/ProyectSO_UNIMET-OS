@@ -169,7 +169,7 @@ public class Deteccion
                 Asignacion[id_Proceso][i] = Asignacion[id_Proceso][i] + solicitud[i];
                 Disponibles[i]= Disponibles[i] - solicitud[i];
             }
-            Consola_D.append("\nAsignado de forma segura \n");            
+            Consola_D.append("\nAsignado de forma segura al proceso "+id_Proceso+" \n");            
             return true; 
         }
         //No se asignan los recursos:
@@ -186,8 +186,7 @@ public class Deteccion
         for (int i = 0; i <solicitud.length; i++) 
         {
             Bloqueados[id_Proceso][i] = solicitud[i];
-            Asignacion[id_Proceso][i] = Asignacion[id_Proceso][i] - solicitud[i];
-            System.out.println("No se asigno al Bloquear Pre: "+Disponibles[i]);
+            System.out.println("No se asigno al Bloquear Pre: "+Disponibles[i]); //Comprobar Disponibles
         }
         bloqueo_actual++;
         Pro_bloq_Total++;
@@ -334,9 +333,7 @@ public class Deteccion
         
         long finishTime = System.nanoTime();
         tiempo = (finishTime - tiempoAux)/1000000;
-        
-        //System.out.println(ProcesosSistema);
-        
+
     }
     
     //Método que finaliza el proceso
@@ -359,7 +356,7 @@ public class Deteccion
                 Disponibles[i] = Asignacion[id_Proceso][i];
                 Asignacion[id_Proceso][i] = 0;
                 Maximos[id_Proceso][i] = 0;
-                System.out.println("DET al finalizar: "+Disponibles[i]);
+                System.out.println("DET al finalizar: "+Disponibles[i]); //Comprobar si los recursos se devuelven
             }
             
             Procesos_finalizados[id_Proceso]= 1;
@@ -385,10 +382,10 @@ public class Deteccion
     {
         for (int i = 0; i < Asignacion[id_Proceso].length; i++) 
         {
-                Disponibles[i]= Asignacion[id_Proceso][i];
+                Disponibles[i]= Disponibles[i]+Asignacion[id_Proceso][i];
                 Asignacion[id_Proceso][i] = 0;
                 Maximos[id_Proceso][i] = 0;
-                System.out.println("DET al eliminar: "+Disponibles[i]);
+                System.out.println("DET al eliminar: "+Disponibles[i]); //Comprobar que si los recursos se devuelven
         }
         Procesos_eliminados[id_Proceso] = 1;
         Pro_eliminados++;

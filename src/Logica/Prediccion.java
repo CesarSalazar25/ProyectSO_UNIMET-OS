@@ -267,7 +267,7 @@ public class Prediccion
         
         if (j == cant_procesos) 
         {
-            Consola_P.append("\nAsignado de forma segura \n");
+            Consola_P.append("\nAsignado de forma segura al proceso "+id_Proceso+" \n");
             return true;
         } 
         else 
